@@ -44,5 +44,26 @@
                     }
                 }
             }
+
         }
+        post {
+        success {
+            script {
+                emailext subject: "Deployment Successful: Jenkins Job ${env.JOB_NAME}",
+                    body: "The deployment of the application was successful.\n\nJenkins Job: ${env.BUILD_URL}",
+                    recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+                    to: "i212654@nu.edu.pk"
+            }
+        }
+        failure {
+            script {
+                emailext subject: "Deployment Failed: Jenkins Job ${env.JOB_NAME}",
+                    body: "The deployment failed. Please check the logs.\n\nJenkins Job: ${env.BUILD_URL}",
+                    recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+                    to: "i212654@nu.edu.pk"
+            }
+        }
+    }
+
+        
     }
